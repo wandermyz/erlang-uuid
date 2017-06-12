@@ -275,8 +275,7 @@ to_binary(simple, UuidStr) ->
     Num = hex_to_int(UuidStr),
     <<Num:128>>;
 to_binary(pretty, UuidStr) ->
-    Parts = string:tokens(UuidStr, "$-"),
-    [I0, I1, I2, I3, I4] = [hex_to_int(Part) || Part <- Parts],
+    {ok, [I0, I1, I2, I3, I4], []} = io_lib:fread("~16u-~16u-~16u-~16u-~16u", UuidStr),
     <<I0:32, I1:16, I2:16, I3:16, I4:48>>.
 
 
